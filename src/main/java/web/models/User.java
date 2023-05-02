@@ -1,22 +1,43 @@
 package web.models;
 
-public class User {
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotEmpty(message = "Имя не может быть пустым")
+    @Size(min = 2, max = 30, message = "Имя не может быть меньше 2, или больше 30 букв")
+    @Column
     private String name;
+    @Min(value = 0, message = "Возраст не может быть меньше 0")
     private int age;
+    @NotEmpty(message = "Email не может быть пустым")
+    @Email(message = "Email указан не корректно")
+    private String email;
 
     public User() {
     }
 
-    public User(String name, int age) {
+    public User(long id, String name, int age, String email) {
+        this.id = id;
         this.name = name;
         this.age = age;
+        this.email = email;
     }
-
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -33,5 +54,13 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

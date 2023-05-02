@@ -1,55 +1,46 @@
 package web.dao;
 
-import org.springframework.stereotype.Component;
-import web.models.Car;
+
+import org.springframework.stereotype.Repository;
+
 import web.models.User;
-
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
-@Component
+@Repository
 public class UserDaoImpl implements UserDao{
-    private List<User> users;
-    {
-        users = new ArrayList<>();
-        users.add(new User("Аня", 35));
-        users.add(new User("Амина", 27));
-        users.add(new User("Лариса", 23));
-        users.add(new User("Саша", 36));
-        users.add(new User("Никита", 21));
 
-    }
-    @Override
-    public void createUsersTable() {
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    }
-
-    @Override
-    public void dropUsersTable() {
-
-    }
-
-    @Override
-    public void saveUser(String name, String lastName, byte age) {
-
-    }
 
     @Override
     public void removeUserById(long id) {
-
+        if (getUserById(id) != null) {
+            entityManager.remove(getUserById(id));
+        }
     }
 
     @Override
     public List<User> getAllUsers() {
-        return users;
+        return entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
+
     }
 
     @Override
     public User getUserById(long id) {
-        return users.stream().filter(user -> user.getId()==id).findAny().orElse(null);
+        return entityManager.find(User.class,id);
     }
 
     @Override
-    public void cleanUsersTable() {
+    public void save(User user) {
+        entityManager.persist(user);
+    }
 
+    @Override
+    public void update(long id, User updaeteUser) {
+        if (getUserById(id) != null){
+            entityManager.merge(updaeteUser);
+        }
     }
 }
