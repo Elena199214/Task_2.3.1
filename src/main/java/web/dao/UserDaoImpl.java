@@ -38,8 +38,8 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public void update(long id, User updaeteUser) {
-        if (getUserById(id) != null){
+    public void update( User updaeteUser) {
+        if (getUserById(updaeteUser.getId()) != null) {
             entityManager.merge(updaeteUser);
         }
     }

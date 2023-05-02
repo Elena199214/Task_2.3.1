@@ -1,6 +1,5 @@
 package web.config;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -24,11 +23,10 @@ import java.util.Properties;
 
 public class HibernateConfig {
     private final Environment env;
-    private final ApplicationContext applicationContext;
 
-    public HibernateConfig(Environment env, ApplicationContext applicationContext) {
+
+    public HibernateConfig(Environment env) {
         this.env = env;
-        this.applicationContext = applicationContext;
     }
 
     @Bean

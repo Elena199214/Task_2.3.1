@@ -13,6 +13,6 @@ public interface UserService {
 
     User getUserById(long id);
 
-    void update(long id, User user);
+    void update(User user);
 }
 

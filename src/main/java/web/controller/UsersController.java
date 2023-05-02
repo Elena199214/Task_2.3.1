@@ -28,16 +28,10 @@ public class UsersController {
     }
 
     @GetMapping("/{id}")
-    public String getUserById(@PathVariable("id") int id, Model model) {
+    public String getUserById(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "user";
     }
-//    @GetMapping()
-//    public String getUsers(@RequestParam long id, Model model){
-//        //Получим одного пользователя из дао по id и передадим на отображение в представление
-//        model.addAttribute("UserById",userDaoImpl.getUserById(id));
-//        return "UserById";
-//    }
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
@@ -50,7 +44,6 @@ public class UsersController {
             return "/new";
         }
         userService.save(user);
-        //добавить в бд
         return "redirect:/";
     }
 
@@ -66,7 +59,7 @@ public class UsersController {
         if (bindingResult.hasErrors()){
             return "edit";
         }
-        userService.update(id, user);
+        userService.update(user);
         return "redirect:/";
     }
 
