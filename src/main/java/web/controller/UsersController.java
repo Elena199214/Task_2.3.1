@@ -14,14 +14,14 @@ import javax.validation.Valid;
 @RequestMapping("/")
 public class UsersController {
 
-    @Autowired
+    @Autowired// можно не писать
     private final UserService userService;
 
     public UsersController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping()
+    @GetMapping
     public String users(Model model) {
         model.addAttribute("allUsers", userService.getAllUsers());
         return "allUsers";
